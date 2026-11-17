@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Bond Villains: The Final Four</title>
-<meta name="description" content="A Final Four-style bracket of villains and henchmen from the Bond films, one branch per era.">
+<meta name="description" content="A Final Four-style bracket of villains and henchpeople from the Bond films, one branch per era.">
 <style>
 :root{
   --cream:#f4ead2; --paper:#fbf5e4; --ink:#1b2a41; --red:#d6382b;
-  --mustard:#e9b44c; --teal:#2a8c82;
+  --mustard:#e9b44c; --teal:#2a8c82; --teal-dark:#1b6f66; --orange:#e8711a;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -21,7 +21,7 @@ body{
 .display{font-family:Impact,"Haettenschweiler","Arial Narrow Bold",sans-serif;letter-spacing:.05em;text-transform:uppercase;font-weight:400}
 
 /* hero */
-.hero{background:var(--red);color:var(--cream);text-align:center;padding:44px 20px 30px;border-bottom:6px solid var(--ink);position:relative;overflow:hidden}
+.hero{background:var(--teal-dark);color:var(--cream);text-align:center;padding:44px 20px 30px;border-bottom:6px solid var(--ink);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(27,42,65,.22) 1.4px,transparent 2px);background-size:12px 12px;pointer-events:none}
 .hero > *{position:relative}
 .kicker{font-size:14px;letter-spacing:.3em;text-transform:uppercase;margin:0 0 6px}
@@ -48,21 +48,56 @@ main{max-width:1500px;margin:0 auto;padding:30px 16px 10px}
 .round-title{font-size:13px;text-align:center;padding:3px 0;margin-bottom:6px;border-bottom:3px solid var(--red)}
 .games{display:flex;flex-direction:column;justify-content:space-around;flex:1}
 .game{border:2px solid var(--ink);background:#fff;margin:5px 0;box-shadow:3px 3px 0 var(--ink)}
-.slot{display:flex;align-items:center;gap:8px;width:100%;padding:5px 7px;min-height:42px;border:0;background:transparent;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.slot{display:flex;align-items:stretch;width:100%;min-height:42px}
 .slot + .slot{border-top:2px solid var(--ink)}
-.slot:hover:not(:disabled){background:#fff1c4}
-.slot:focus-visible{outline:3px solid var(--teal);outline-offset:-3px}
-.slot:disabled{cursor:default}
-.slot.win{background:var(--mustard)}
+.slot.can:hover{background:#fff1c4}
+.slot.win,.slot.win.can:hover{background:var(--mustard)}
 .slot.lose{opacity:.42}
-.mono{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--ink);font-family:Impact,"Arial Narrow Bold",sans-serif;font-size:12px;letter-spacing:.03em}
-.mono.V{background:var(--ink);color:var(--cream)}
-.mono.H{background:var(--teal);color:var(--cream)}
-.mono.tbd{background:transparent;border-style:dashed;color:transparent}
+.thumb{flex:none;display:grid;place-items:center;padding:0 2px 0 7px;border:0;background:transparent;cursor:zoom-in}
+.thumb.ph{cursor:default}
+.thumb:focus-visible .mono{outline:3px solid var(--teal);outline-offset:2px}
+.pick,.pickbox{flex:1;min-width:0;display:flex;align-items:center;padding:5px 7px;border:0;background:transparent;font:inherit;color:inherit;text-align:left}
+.pick{cursor:pointer}
+.pick:disabled{cursor:default}
+.pick:focus-visible{outline:3px solid var(--teal);outline-offset:-3px}
+/* portrait circles: solid gray placeholder, ring colour = role (same 2px solid stroke as before) */
+.mono{flex:none;width:30px;height:30px;border-radius:50%;background:#9a9a9a center/cover no-repeat;border:2px solid var(--ink)}
+.mono.V{border-color:var(--red)}
+.mono.H{border-color:var(--orange)}
+.mono.tbd{background:transparent;border:2px dashed var(--ink)}
 .txt{min-width:0;line-height:1.15}
 .nm{font-weight:bold;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sub{font-size:11px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tbd-text{font-style:italic;font-size:12px;opacity:.55}
+
+/* round tabs (shown on narrow screens only) */
+.round-tabs{display:none}
+button.rtab{font-family:Impact,"Haettenschweiler","Arial Narrow Bold",sans-serif;letter-spacing:.04em;text-transform:uppercase;font-size:13px;line-height:1.1;padding:7px 2px 5px;border:2px solid var(--ink);background:var(--paper);color:var(--ink);cursor:pointer}
+button.rtab small{display:block;font-family:Georgia,serif;font-size:11px;letter-spacing:0;text-transform:none;margin-top:2px;opacity:.75}
+button.rtab.on{background:var(--ink);color:var(--cream)}
+button.rtab:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+@media (max-width:820px){
+  main{padding:20px 10px 6px}
+  .regions{gap:22px}
+  .region{box-shadow:5px 5px 0 var(--ink)}
+  .region-head h2{font-size:26px}
+  .region-head .meta{text-align:left}
+  .round-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:12px 12px 0}
+  button.rtab{font-size:12px;letter-spacing:.02em}
+  .bracket-scroll{overflow-x:visible;padding:10px 12px 14px}
+  .bracket{display:block;min-width:0}
+  .round{display:none}
+  .round.active{display:flex}
+  .round-title{display:none}
+  .games{justify-content:flex-start}
+  .game{margin:8px 0}
+  .slot{min-height:54px}
+  .thumb{padding:0 4px 0 10px}
+  .pick,.pickbox{padding:8px 10px}
+  .mono{width:36px;height:36px}
+  .nm{font-size:15px}
+  .sub{font-size:12px}
+}
 
 /* final four */
 .final4{max-width:1100px;margin:44px auto 0;padding:0 16px 60px}
@@ -82,8 +117,30 @@ footer{text-align:center;padding:26px 16px 40px;font-size:13px;line-height:1.5;b
 footer p{max-width:720px;margin:6px auto}
 .legend{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:22px 0 0;font-size:13px}
 .legend span{display:inline-flex;align-items:center;gap:6px}
-.legend .mono{width:20px;height:20px;font-size:0}
+.legend .mono{width:20px;height:20px}
 @media (max-width:820px){ .f4grid{grid-template-columns:1fr} }
+/* profile modal */
+body.modal-open{overflow:hidden}
+.modal-back{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(27,42,65,.74)}
+.modal-back.open{display:flex}
+.modal{position:relative;width:min(100%,520px);max-height:calc(100vh - 32px);overflow:auto;background:var(--paper);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);padding:38px 26px 18px;text-align:center}
+.modal:focus{outline:none}
+.modal-x{position:absolute;top:8px;right:8px;width:40px;height:40px;display:grid;place-items:center;border:3px solid var(--ink);background:var(--mustard);color:var(--ink);font:400 26px/1 Impact,"Arial Narrow Bold",sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--ink)}
+.modal-x:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.modal-x:focus-visible,.modal a:focus-visible,button.copy:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.portrait{width:168px;height:168px;margin:0 auto 14px;border-radius:50%;background:#9a9a9a center/cover no-repeat;border:4px solid var(--ink)}
+.portrait.V{border-color:var(--red)}
+.portrait.H{border-color:var(--orange)}
+.m-role{display:inline-block;padding:2px 12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream)}
+.m-role.V{background:var(--red)}
+.m-role.H{background:var(--orange);color:var(--ink)}
+.m-name{margin:10px 0 4px;font-size:clamp(28px,7vw,40px);line-height:1}
+.m-meta{margin:0 0 14px;font-size:14px;opacity:.8}
+.m-bio{margin:0;text-align:left;font-size:16px;line-height:1.55}
+.m-foot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px;padding-top:10px;border-top:2px solid var(--ink)}
+.m-foot a{font-size:12px;color:var(--ink)}
+button.copy{min-width:84px;padding:6px 14px;font-size:13px;box-shadow:3px 3px 0 var(--ink)}
+
 </style>
 </head>
 <body>
@@ -91,7 +148,7 @@ footer p{max-width:720px;margin:6px auto}
 <header class="hero">
   <p class="kicker">Four eras &middot; Sixty-four baddies &middot; One winner</p>
   <h1 class="display">Bond Villains<br><span>The Final Four</span></h1>
-  <p class="tag">Masterminds and their muscle, seeded by film. Click a name to send them through, from the first round to the champion.</p>
+  <p class="tag">Masterminds and their muscle, seeded by film. Click a name to send them through, or click a portrait to read their dossier.</p>
   <div class="controls">
     <button class="btn" id="randomBtn" type="button">Auto-pick the rest</button>
     <button class="btn alt" id="resetBtn" type="button">Reset bracket</button>
@@ -99,8 +156,8 @@ footer p{max-width:720px;margin:6px auto}
   </div>
   <div class="progress" id="progress"></div>
   <div class="legend">
-    <span><i class="mono V"></i> Villain</span>
-    <span><i class="mono H"></i> Henchman</span>
+    <span><i class="mono V"></i> Villain (red ring)</span>
+    <span><i class="mono H"></i> Henchperson (orange ring)</span>
   </div>
 </header>
 
@@ -120,98 +177,129 @@ footer p{max-width:720px;margin:6px auto}
 </section>
 
 <footer>
-  <p>Names and cast are drawn from Wikipedia's lists of James Bond villains and henchmen, plus cast listings for <em>No Time to Die</em>. Only Eon Productions films are included.</p>
+  <p>Names, cast and character notes are drawn from Wikipedia’s James Bond articles (each profile links to its source) and are written in our own words. Only Eon Productions films are included.</p>
   <p>Fan project. Not affiliated with or endorsed by Eon Productions, MGM or the estate of Ian Fleming. Portraits are placeholders until custom illustrations are added.</p>
 </footer>
+
+
+<div class="modal-back" id="modalBack">
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mName" aria-describedby="mBio" tabindex="-1">
+    <button class="modal-x" id="mClose" type="button" aria-label="Close profile">&times;</button>
+    <div class="portrait" id="mPortrait" aria-hidden="true"></div>
+    <span class="m-role display" id="mRole"></span>
+    <h3 class="m-name display" id="mName"></h3>
+    <p class="m-meta" id="mMeta"></p>
+    <p class="m-bio" id="mBio"></p>
+    <div class="m-foot">
+      <a id="mSrc" href="#" target="_blank" rel="noopener">Source: Wikipedia</a>
+      <button class="btn copy" id="mCopy" type="button" aria-live="polite">Copy</button>
+    </div>
+  </div>
+</div>
 
 <script>
 (function(){
   "use strict";
 
-  // [character, actor, film, role (V = villain, H = henchman), optional monogram override]
+  // [character, actor, film, role (V = villain, H = henchperson), short bio, Wikipedia article title]
   // Consecutive pairs are first-round matchups: usually a boss against his own muscle.
+  // Bios are written from Wikipedia articles; each profile links back to its source article.
   var REGIONS = [
     { id:"c", name:"Connery & Lazenby", era:"1962–1971", films:"Dr. No → Diamonds Are Forever", entries:[
-      ["Dr. Julius No","Joseph Wiseman","Dr. No","V"],
-      ["Professor Dent","Anthony Dawson","Dr. No","H"],
-      ["Rosa Klebb","Lotte Lenya","From Russia with Love","V"],
-      ["Donald “Red” Grant","Robert Shaw","From Russia with Love","H"],
-      ["Auric Goldfinger","Gert Fröbe","Goldfinger","V"],
-      ["Oddjob","Harold Sakata","Goldfinger","H"],
-      ["Emilio Largo","Adolfo Celi","Thunderball","V"],
-      ["Fiona Volpe","Luciana Paluzzi","Thunderball","H"],
-      ["Blofeld","Donald Pleasence","You Only Live Twice","V"],
-      ["Helga Brandt","Karin Dor","You Only Live Twice","H"],
-      ["Blofeld","Telly Savalas","On Her Majesty’s Secret Service","V"],
-      ["Irma Bunt","Ilse Steppat","On Her Majesty’s Secret Service","H"],
-      ["Blofeld","Charles Gray","Diamonds Are Forever","V"],
-      ["Mr. Wint & Mr. Kidd","Bruce Glover & Putter Smith","Diamonds Are Forever","H"],
-      ["Pussy Galore","Honor Blackman","Goldfinger","H"],
-      ["Mr. Osato","Teru Shimada","You Only Live Twice","H"]
+      ["Dr. Julius No", "Joseph Wiseman", "Dr. No", "V", "Dr. Julius No is a Chinese-German scientist with metal hands, created by Ian Fleming for his 1958 novel and played on screen by Joseph Wiseman. In the 1962 film, the first of the series, he is a reclusive member of SPECTRE who runs an island hideout and uses a radio beam to sabotage American rocket launches. Bond overloads his nuclear reactor, and Dr. No dies in its cooling pond.", "Julius_No"],
+      ["Professor Dent", "Anthony Dawson", "Dr. No", "H", "Professor R. J. Dent is a geologist with a practice in Kingston who is secretly working for Dr. No. He is played by Anthony Dawson, who went on to appear in From Russia with Love and Thunderball as the physical Blofeld, with Eric Pohlmann supplying the voice. That makes Dent a rare henchperson whose actor was later promoted to boss.", "Dr._No_(film)"],
+      ["Rosa Klebb", "Lotte Lenya", "From Russia with Love", "V", "Colonel Rosa Klebb is the main antagonist of From Russia with Love, played by Lotte Lenya. A former Soviet counter-intelligence officer who has moved over to SPECTRE, she schemes to lure Bond and MI6 into stealing a Soviet decoding machine while wrecking Bond’s reputation. Her name is a pun on a Russian rendering of the labour slogan about bread and roses. She is best remembered for the poisoned blade hidden in her shoe.", "Rosa_Klebb"],
+      ["Donald “Red” Grant", "Robert Shaw", "From Russia with Love", "H", "Donald “Red” Grant is the SPECTRE assassin who stalks Bond through From Russia with Love, played by Robert Shaw. In Fleming’s novel the character works for SMERSH, the Soviet agency, but the film moves him into SPECTRE’s employ. His fight with Bond aboard the Orient Express is among the most famous in the series.", "From_Russia_with_Love_(film)"],
+      ["Auric Goldfinger", "Gert Fröbe", "Goldfinger", "V", "Auric Goldfinger is the gold-obsessed title villain of the 1964 film, played by Gert Fröbe and named by Fleming after the architect Ernő Goldfinger, whose Hampstead home stood next to his own. Fröbe spoke little English, so his lines were dubbed by the actor Michael Collins. The scheme is to irradiate the gold at Fort Knox with a nuclear device, which would raise the value of his own hoard. The American Film Institute ranked him the 49th-greatest film villain of the past century.", "Auric_Goldfinger"],
+      ["Oddjob", "Harold Sakata", "Goldfinger", "H", "Oddjob is Goldfinger’s lethal Korean manservant, played by Harold Sakata, a professional wrestler who won an Olympic silver medal in weightlifting. Director Guy Hamilton cast him after seeing him on a wrestling programme, and the role has no spoken lines. Sakata was badly burned while filming Oddjob’s death scene but reportedly kept hold of the famous hat until the director called cut. The character remains one of the most popular in the series.", "Oddjob"],
+      ["Emilio Largo", "Adolfo Celi", "Thunderball", "V", "Emilio Largo is SPECTRE’s Number Two and the main villain of Thunderball (1965), played by Adolfo Celi and dubbed by Robert Rietty. He steals two atomic bombs and threatens a major city unless governments pay a ransom of 100 million pounds. He is killed by a harpoon fired by Domino, the woman he had been using as his mistress. The character returns as Maximilian Largo, played by Klaus Maria Brandauer, in the unofficial remake Never Say Never Again.", "Emilio_Largo"],
+      ["Fiona Volpe", "Luciana Paluzzi", "Thunderball", "H", "Fiona Volpe is a SPECTRE assassin in Thunderball, played by Luciana Paluzzi. Paluzzi originally auditioned for Domino, the film’s lead female role, but was handed Volpe instead. The character does not appear in Fleming’s novel and was first written as Irish before being changed to suit Paluzzi, with the surname meaning fox in Italian.", "Fiona_Volpe"],
+      ["Blofeld", "Donald Pleasence", "You Only Live Twice", "V", "Donald Pleasence plays Ernst Stavro Blofeld in You Only Live Twice (1967), the film that finally shows the SPECTRE chief’s face after earlier appearances showed only his hands stroking a white cat. His plan is to start a war between the United States and the Soviet Union by capturing their space capsules in orbit, on behalf of China. Bond sets off a self-destruct button in the lair and destroys the Bird One spacecraft, but Blofeld survives, wounded.", "Ernst_Stavro_Blofeld"],
+      ["Helga Brandt", "Karin Dor", "You Only Live Twice", "H", "Helga Brandt is a SPECTRE assassin, numbered 11 in the organisation, played by Karin Dor in You Only Live Twice. The film is set largely in Japan, where Bond is trying to find out who is capturing spacecraft. She works alongside the industrialist Mr. Osato, who is secretly affiliated with SPECTRE.", "You_Only_Live_Twice_(film)"],
+      ["Blofeld", "Telly Savalas", "On Her Majesty’s Secret Service", "V", "Telly Savalas plays Blofeld in On Her Majesty’s Secret Service (1969), running an Alpine clinic at Piz Gloria. He brainwashes twelve women, his “Angels of Death,” to spread a virus that would make livestock and crops infertile unless the United Nations grants him a pardon and the title of count. Bond and Marc-Ange Draco destroy the laboratory, but Blofeld survives, and his henchwoman Irma Bunt later kills Bond’s new wife, Tracy, on their honeymoon.", "Ernst_Stavro_Blofeld"],
+      ["Irma Bunt", "Ilse Steppat", "On Her Majesty’s Secret Service", "H", "Irma Bunt is Blofeld’s loyal henchwoman in On Her Majesty’s Secret Service, played by Ilse Steppat. She is the one who assassinates Tracy di Vicenzo, Bond’s newly married wife, in the film’s devastating ending. In a later short story by Raymond Benson, Bunt tries to kill Bond with a razor soaked in pufferfish poison.", "On_Her_Majesty's_Secret_Service_(film)"],
+      ["Blofeld", "Charles Gray", "Diamonds Are Forever", "V", "Charles Gray takes over as Blofeld in Diamonds Are Forever (1971), having already appeared in the series as Bond’s British contact Dikko Henderson in You Only Live Twice. His plan is to use smuggled diamonds to build a laser satellite that could detonate nuclear stockpiles from orbit, then extort the world’s nuclear powers. Bond wrecks his oil-rig control room, and a similar, unnamed bald villain turns up in the opening of For Your Eyes Only, where Bond drops him down a chimney.", "Ernst_Stavro_Blofeld"],
+      ["Mr. Wint & Mr. Kidd", "Bruce Glover & Putter Smith", "Diamonds Are Forever", "H", "Mr. Wint and Mr. Kidd are a pair of contract killers in Diamonds Are Forever, played by Bruce Glover and by the jazz musician Putter Smith in a rare acting role. In Fleming’s novel they belong to a gang called the Spangled Mob, while in the film they are assumed to work for Blofeld even though they never share a scene with him. Their trademark is trading quips after a kill.", "Mr._Wint_and_Mr._Kidd"],
+      ["Pussy Galore", "Honor Blackman", "Goldfinger", "H", "Pussy Galore is Goldfinger’s personal pilot and the leader of an all-female flying team, Pussy Galore’s Flying Circus. Honor Blackman was cast because of her role as the judo expert Cathy Gale in The Avengers, and the script was rewritten to make Galore a judoka too. American censors objected to the name on publicity material, so U.S. promotion referred to her as Miss Galore. Fleming’s friend Blanche Blackwell is thought to have been his model for the character.", "Pussy_Galore"],
+      ["Mr. Osato", "Teru Shimada", "You Only Live Twice", "H", "Mr. Osato is a Japanese industrialist who is secretly affiliated with SPECTRE in You Only Live Twice, played by Teru Shimada. He is part of the Japanese end of Blofeld’s plan to provoke a war between the United States and the Soviet Union. He is counted among the henchpeople in this bracket rather than the masterminds.", "You_Only_Live_Twice_(film)"]
     ]},
     { id:"m", name:"Moore", era:"1973–1985", films:"Live and Let Die → A View to a Kill", entries:[
-      ["Dr. Kananga / Mr. Big","Yaphet Kotto","Live and Let Die","V"],
-      ["Tee Hee","Julius W. Harris","Live and Let Die","H"],
-      ["Francisco Scaramanga","Christopher Lee","The Man with the Golden Gun","V"],
-      ["Nick Nack","Hervé Villechaize","The Man with the Golden Gun","H"],
-      ["Karl Stromberg","Curt Jürgens","The Spy Who Loved Me","V"],
-      ["Jaws","Richard Kiel","The Spy Who Loved Me / Moonraker","H"],
-      ["Hugo Drax","Michael Lonsdale","Moonraker","V"],
-      ["Chang","Toshiro Suga","Moonraker","H"],
-      ["Aristotle Kristatos","Julian Glover","For Your Eyes Only","V"],
-      ["Emile Locque","Michael Gothard","For Your Eyes Only","H"],
-      ["Prince Kamal Khan","Louis Jourdan","Octopussy","V"],
-      ["Gobinda","Kabir Bedi","Octopussy","H"],
-      ["Max Zorin","Christopher Walken","A View to a Kill","V"],
-      ["May Day","Grace Jones","A View to a Kill","H"],
-      ["Baron Samedi","Geoffrey Holder","Live and Let Die","H"],
-      ["Naomi","Caroline Munro","The Spy Who Loved Me","H"]
+      ["Dr. Kananga / Mr. Big", "Yaphet Kotto", "Live and Let Die", "V", "Dr. Kananga is a corrupt Caribbean prime minister who doubles as the drug lord Mr. Big in Live and Let Die (1973), played by Yaphet Kotto. His plan is to hand out a huge stock of heroin for free in the United States, driving his competitors out of business and giving him a monopoly. The name Mr. Big comes from Fleming’s novel, whose villain smuggled gold coins to finance SMERSH. Bond kills him by forcing a compressed-gas pellet into his mouth, and he inflates and bursts.", "Live_and_Let_Die_(film)"],
+      ["Tee Hee", "Julius W. Harris", "Live and Let Die", "H", "Tee Hee Johnson is Kananga’s primary henchperson in Live and Let Die, played by Julius W. Harris. He is easy to recognise by his pincer-tipped prosthetic arm. The film was Roger Moore’s first as Bond, and Tee Hee is one of several Kananga henchpeople alongside Baron Samedi, Whisper and Adam.", "Live_and_Let_Die_(film)"],
+      ["Francisco Scaramanga", "Christopher Lee", "The Man with the Golden Gun", "V", "Francisco Scaramanga is a hired assassin known for his golden gun and a supernumerary nipple, played by Christopher Lee in The Man with the Golden Gun (1974). Lee was Ian Fleming’s step-cousin and a regular golf partner, and the performance has been widely praised for making the villain a match for Bond. In the film Scaramanga wants to kill Bond, the only man he considers his equal, and to sell the Solex Agitator, a device that harnesses solar energy. Their duel ends with Bond shooting him, the only kill Bond makes in the film.", "The_Man_with_the_Golden_Gun_(film)"],
+      ["Nick Nack", "Hervé Villechaize", "The Man with the Golden Gun", "H", "Nick Nack is Scaramanga’s manservant and accomplice, played by Hervé Villechaize. Villechaize later became familiar to American television audiences as Tattoo on Fantasy Island. In the film he works alongside Scaramanga in the game of cat and mouse with Bond.", "The_Man_with_the_Golden_Gun_(film)"],
+      ["Karl Stromberg", "Curd Jürgens", "The Spy Who Loved Me", "V", "Karl Stromberg is the megalomaniac of The Spy Who Loved Me (1977), created for the film by writer Christopher Wood and played by Curd Jürgens. Fleming sold the rights to the title only, so the film’s plot has nothing to do with his novel. Stromberg steals a British and a Soviet submarine to provoke a nuclear war, planning to rebuild civilisation in secret bases under the sea. Bond turns the missiles on the submarines, then shoots Stromberg using his own dinner-table booby trap.", "Karl_Stromberg"],
+      ["Jaws", "Richard Kiel", "The Spy Who Loved Me / Moonraker", "H", "Jaws is a towering henchperson with steel teeth, played by Richard Kiel in The Spy Who Loved Me (1977) and Moonraker (1979). He is distinguished by his size, immense strength and near invulnerability, and the character is described as having gigantism. He first works for Stromberg and later for Drax, and he is regarded as one of the most iconic characters in the franchise.", "Jaws_(James_Bond)"],
+      ["Hugo Drax", "Michael Lonsdale", "Moonraker", "V", "Sir Hugo Drax is the industrialist villain of Moonraker (1979), played by Michael Lonsdale. Screenwriter Christopher Wood changed him greatly from the Drax of Fleming’s 1955 novel. In the film he plans to launch nerve-agent globes from a space station, wipe out humanity and repopulate the Earth with carefully chosen people from his orbital base. Bond shoots him with a cyanide dart and he is ejected into space.", "Hugo_Drax"],
+      ["Chang", "Toshiro Suga", "Moonraker", "H", "Chang is Drax’s first henchperson in Moonraker, played by Toshiro Suga. He is soon replaced at Drax Industries by Jaws, who becomes the film’s signature henchperson. That makes Chang the underdog of this bracket: a one-film bodyguard overshadowed by the man who took his job.", "Moonraker_(film)"],
+      ["Aristotle Kristatos", "Julian Glover", "For Your Eyes Only", "V", "Aristotle Kristatos is a former war hero turned smuggler in For Your Eyes Only (1981), played by Julian Glover. He first appears to be an ally, then is revealed as the main villain, planning to sell a lost British missile-command system, the ATAC, to the KGB. He also tries to trick Bond into killing his rival, Milos Columbo. Glover had been shortlisted to play Bond himself for Live and Let Die before the part went to Roger Moore. Columbo kills Kristatos with a thrown knife.", "For_Your_Eyes_Only_(film)"],
+      ["Emile Locque", "Michael Gothard", "For Your Eyes Only", "H", "Emile Leopold Locque is a Belgian hired assassin recognisable by his octagonal-rimmed glasses, played by Michael Gothard in For Your Eyes Only. He turns out to be an associate of Kristatos. During the beach chase, he is the one who kills Columbo’s mistress, Lisl.", "For_Your_Eyes_Only_(film)"],
+      ["Prince Kamal Khan", "Louis Jourdan", "Octopussy", "V", "Kamal Khan is an exiled Afghan prince and smuggler in Octopussy (1983), played by Louis Jourdan. He works with the renegade Soviet general Orlov, who pays him in jewels stolen from the Kremlin as part of a plan to detonate a nuclear bomb at a U.S. air base in West Germany. After the jewels are recovered, Khan tries to flee by plane, but Bond disables an engine and the aircraft crashes into a mountain.", "Octopussy"],
+      ["Gobinda", "Kabir Bedi", "Octopussy", "H", "Gobinda is Kamal Khan’s powerful bodyguard in Octopussy, played by Kabir Bedi. He is part of Khan’s circle in a film that combines a jewel-smuggling plot with a Soviet scheme to bomb a U.S. air base. Octopussy was Roger Moore’s sixth Bond film.", "Octopussy"],
+      ["Max Zorin", "Christopher Walken", "A View to a Kill", "V", "Max Zorin is a psychopathic industrialist in A View to a Kill (1985), played by Christopher Walken and described as the product of a Nazi genetic experiment. He plans to trigger an earthquake along the San Andreas Fault and destroy Silicon Valley, leaving him a monopoly on microchips. Bond finishes the fight with him on the Golden Gate Bridge, from which Zorin falls. The film was Roger Moore’s seventh and last as Bond.", "A_View_to_a_Kill"],
+      ["May Day", "Grace Jones", "A View to a Kill", "H", "May Day is Zorin’s lover and chief henchwoman in A View to a Kill, played by the musician and actress Grace Jones. Jones received a Saturn Award nomination for Best Supporting Actress for the role. When Zorin leaves her to die, May Day turns on him and smuggles the bomb out of the blast radius, sacrificing herself.", "May_Day_(James_Bond)"],
+      ["Baron Samedi", "Geoffrey Holder", "Live and Let Die", "H", "Baron Samedi is a Kananga henchperson with ties to Voodoo occult, played by Geoffrey Holder in Live and Let Die. His name comes from a real figure in Haitian Vodou, a lwa of the dead who heads the Gede family of spirits. He is one of several Kananga henchpeople, along with Tee Hee, Whisper and Adam.", "Live_and_Let_Die_(film)"],
+      ["Naomi", "Caroline Munro", "The Spy Who Loved Me", "H", "Naomi is Stromberg’s personal pilot and would-be assassin in The Spy Who Loved Me, played by Caroline Munro. Munro’s casting was inspired by an advertising campaign she had made. Her voice was dubbed by the uncredited Barbara Jefford, who also dubbed Daniela Bianchi in From Russia with Love and Molly Peters in Thunderball.", "The_Spy_Who_Loved_Me_(film)"]
     ]},
     { id:"b", name:"Dalton & Brosnan", era:"1987–2002", films:"The Living Daylights → Die Another Day", entries:[
-      ["General Georgi Koskov","Jeroen Krabbé","The Living Daylights","V"],
-      ["Necros","Andreas Wisniewski","The Living Daylights","H"],
-      ["Brad Whitaker","Joe Don Baker","The Living Daylights","V"],
-      ["General Arkady Ourumov","Gottfried John","GoldenEye","H"],
-      ["Franz Sanchez","Robert Davi","Licence to Kill","V"],
-      ["Dario","Benicio del Toro","Licence to Kill","H"],
-      ["Alec Trevelyan","Sean Bean","GoldenEye","V"],
-      ["Xenia Onatopp","Famke Janssen","GoldenEye","H"],
-      ["Boris Grishenko","Alan Cumming","GoldenEye","H"],
-      ["Dr. Kaufman","Vincent Schiavelli","Tomorrow Never Dies","H"],
-      ["Elliot Carver","Jonathan Pryce","Tomorrow Never Dies","V"],
-      ["Stamper","Götz Otto","Tomorrow Never Dies","H"],
-      ["Elektra King","Sophie Marceau","The World Is Not Enough","V"],
-      ["Renard","Robert Carlyle","The World Is Not Enough","V"],
-      ["Gustav Graves","Toby Stephens","Die Another Day","V"],
-      ["Zao","Rick Yune","Die Another Day","H"]
+      ["General Georgi Koskov", "Jeroen Krabbé", "The Living Daylights", "V", "General Georgi Koskov is a renegade Soviet general played by Jeroen Krabbé in The Living Daylights (1987). He fakes a defection to trick MI6 into eliminating his rival, General Pushkin, who was investigating his weapons-smuggling racket. Bond and Pushkin stage Pushkin’s assassination, and Bond destroys the opium shipment Koskov planned to trade for arms. Koskov is arrested, and the film implies he is executed offscreen.", "The_Living_Daylights"],
+      ["Necros", "Andreas Wisniewski", "The Living Daylights", "H", "Necros is Koskov’s henchperson in The Living Daylights, played by Andreas Wisniewski, with his voice dubbed by an uncredited Kerry Shale. He poses repeated threats to Bond throughout the film. The movie was Timothy Dalton’s first as 007.", "The_Living_Daylights"],
+      ["Brad Whitaker", "Joe Don Baker", "The Living Daylights", "V", "Brad Whitaker is an American arms dealer and self-styled general, played by Joe Don Baker in The Living Daylights. Baker has said he played him as a man who believed he was Napoleon. Whitaker joins Koskov in a deal that would swap high-tech weapons for opium, until Bond destroys the opium. Bond then sets off a bomb disguised as a key chain, dropping a bust of the Duke of Wellington on him. Baker returned to the series as the CIA officer Jack Wade in GoldenEye and Tomorrow Never Dies.", "The_Living_Daylights"],
+      ["General Arkady Ourumov", "Gottfried John", "GoldenEye", "H", "General Arkady Ourumov is a Hero of the Soviet Union and the commander of Russia’s space division in GoldenEye (1995), played by Gottfried John. Secretly an agent of the Janus crime syndicate, he abuses his authority to get control of the GoldenEye satellite weapon. He is the respectable-looking officer who turns out to be muscle for a larger conspiracy.", "GoldenEye"],
+      ["Franz Sanchez", "Robert Davi", "Licence to Kill", "V", "Franz Sanchez is the most powerful drug lord in Latin America and the main villain of Licence to Kill (1989), played by Robert Davi. After he orders an attack on Felix Leiter and the murder of Leiter’s wife on their wedding day, Bond resigns from MI6 to go after him. Sanchez’s plan is to smuggle cocaine into Asia by dissolving it in petrol. Bond sets him alight with a lighter that was a wedding gift to the Leiters.", "Licence_to_Kill"],
+      ["Dario", "Benicio del Toro", "Licence to Kill", "H", "Dario is Sanchez’s personal henchperson in Licence to Kill, played by Benicio del Toro. The film was the first Bond movie shot entirely outside the United Kingdom, with filming in Mexico and the United States. It was Timothy Dalton’s second and final film as Bond.", "Licence_to_Kill"],
+      ["Alec Trevelyan", "Sean Bean", "GoldenEye", "V", "Alec Trevelyan, also known as 006, is a fellow double-O agent and close friend of Bond who turns villain in GoldenEye, played by Sean Bean. He fakes his death at Arkhangelsk and spends nine years building the Janus crime syndicate. His motive is revenge on Britain over the repatriation of the Lienz Cossacks, which led to his parents’ murder-suicide, and his plan is to use the GoldenEye weapon to wreck London’s economy. He is crushed by the collapsing antenna of the satellite dish.", "Alec_Trevelyan"],
+      ["Xenia Onatopp", "Famke Janssen", "GoldenEye", "H", "Xenia Onatopp is a fighter pilot and assassin who crushes her victims with her thighs, played by Famke Janssen in GoldenEye. She works for Trevelyan and helps steal a Tiger attack helicopter after seducing and killing a Canadian admiral. The character has also appeared as a playable multiplayer character in several Bond video games.", "Xenia_Onatopp"],
+      ["Boris Grishenko", "Alan Cumming", "GoldenEye", "H", "Boris Grishenko is a geeky computer programmer at the Severnaya station who survives the GoldenEye attack, played by Alan Cumming. He is later revealed to be an affiliate of Janus. He is the technical muscle behind the plot, which is why he sits on the henchperson side of this bracket.", "GoldenEye"],
+      ["Dr. Kaufman", "Vincent Schiavelli", "Tomorrow Never Dies", "H", "Dr. Kaufman is a professor of forensic medicine and professional assassin in Tomorrow Never Dies, played by Vincent Schiavelli. Elliot Carver uses him as a hired killer, and he is also the mentor of Carver’s henchperson Stamper. Tomorrow Never Dies (1997) was Pierce Brosnan’s second Bond film.", "Tomorrow_Never_Dies"],
+      ["Elliot Carver", "Jonathan Pryce", "Tomorrow Never Dies", "V", "Elliot Carver is a media tycoon with a god complex in Tomorrow Never Dies, played by Jonathan Pryce. He plans to provoke a war between the United Kingdom and China by firing a missile at Beijing from a sunken warship, so that his news empire can profit and secure a broadcasting deal with a new Chinese government. Retrospectives often point to the film’s foresight about fake news. Bond leaves him in the path of his own Sea-Vac drill.", "Tomorrow_Never_Dies"],
+      ["Stamper", "Götz Otto", "Tomorrow Never Dies", "H", "Richard Stamper is Carver’s henchperson in Tomorrow Never Dies, played by Götz Otto. He is skilled in a form of chakra torture. His mentor is Dr. Kaufman, the forensic expert and assassin who also works for Carver.", "Tomorrow_Never_Dies"],
+      ["Elektra King", "Sophie Marceau", "The World Is Not Enough", "V", "Elektra King is an oil heiress and, along with Renard, one of the two main villains of The World Is Not Enough (1999), played by Sophie Marceau. Bond is sent to protect her after her father’s murder, even though she was once held for ransom by the same terrorist. Her plan is to gain a monopoly on European crude oil with a nuclear explosion that would block the Bosporus, and to take revenge on M. Bond shoots her when she refuses to call Renard off.", "Elektra_King"],
+      ["Renard", "Robert Carlyle", "The World Is Not Enough", "V", "Victor “Renard” Zokas is a former KGB agent turned terrorist in The World Is Not Enough, played by Robert Carlyle. A bullet lodged in his brain has made him immune to pain while slowly killing his other senses. The role was offered to Javier Bardem before Carlyle, and Bardem later played Silva in Skyfall. Bond kills him by shooting a plutonium rod out of a submarine reactor.", "The_World_Is_Not_Enough"],
+      ["Gustav Graves", "Toby Stephens", "Die Another Day", "V", "Gustav Graves is a British entrepreneur who is secretly the North Korean colonel Tan-Sun Moon in Die Another Day (2002), played by Toby Stephens. The character was modelled partly on Hugo Drax from Fleming’s Moonraker, with further inspiration from Uday Hussein and Richard Branson. His plan is to use the Icarus sun-enhancing satellite to cut a path through the Korean Demilitarized Zone and provoke a war. Bond pulls his parachute cord, sucking him out of the plane and into its engine.", "Die_Another_Day"],
+      ["Zao", "Rick Yune", "Die Another Day", "H", "Tang-Ling Zao is a North Korean terrorist who works for Colonel Moon and lives as an exile, played by Rick Yune in Die Another Day. He belongs to the circle around Gustav Graves, who is Moon’s alter ego. Die Another Day was Pierce Brosnan’s final film as Bond.", "Die_Another_Day"]
     ]},
     { id:"k", name:"Craig", era:"2006–2021", films:"Casino Royale → No Time to Die", entries:[
-      ["Le Chiffre","Mads Mikkelsen","Casino Royale","V"],
-      ["Mollaka","Sébastien Foucan","Casino Royale","H"],
-      ["Steven Obanno","Isaach de Bankolé","Casino Royale","V"],
-      ["Alex Dimitrios","Simon Abkarian","Casino Royale","H"],
-      ["Dominic Greene","Mathieu Amalric","Quantum of Solace","V"],
-      ["Elvis","Anatole Taubman","Quantum of Solace","H"],
-      ["General Medrano","Joaquín Cosio","Quantum of Solace","V"],
-      ["Mr. White","Jesper Christensen","Casino Royale / Quantum of Solace","V"],
-      ["Raoul Silva","Javier Bardem","Skyfall","V"],
-      ["Patrice","Ola Rapace","Skyfall","H"],
-      ["Séverine","Bérénice Marlohe","Skyfall","H"],
-      ["Max Denbigh, “C”","Andrew Scott","Spectre","H","C"],
-      ["Blofeld","Christoph Waltz","Spectre / No Time to Die","V"],
-      ["Mr. Hinx","Dave Bautista","Spectre","H"],
-      ["Lyutsifer Safin","Rami Malek","No Time to Die","V"],
-      ["Primo","Dali Benssalah","No Time to Die","H"]
+      ["Le Chiffre", "Mads Mikkelsen", "Casino Royale", "V", "Le Chiffre is the main antagonist of Casino Royale, played by Mads Mikkelsen in the 2006 film. Fleming based the character on the occultist Aleister Crowley, and on screen he was also played by Peter Lorre in a 1954 TV version and Orson Welles in the 1967 spoof. In 2006 he is a financier trying to recover his clients’ lost money by winning a high-stakes poker tournament. Mr. White shoots him in the forehead.", "Le_Chiffre"],
+      ["Mollaka", "Sébastien Foucan", "Casino Royale", "H", "Mollaka is a bomb-maker whom Bond chases through a construction site in Madagascar in Casino Royale. He is played by Sébastien Foucan, who is credited for free-running stunts and is known as a founder of the freerunning discipline. The chase is one of the film’s signature action set pieces.", "Casino_Royale_(2006_film)"],
+      ["Steven Obanno", "Isaach de Bankolé", "Casino Royale", "V", "Steven Obanno is an African militant leader played by Isaach de Bankolé in Casino Royale. He is one of the clients whose money Le Chiffre has lost, which is why Le Chiffre needs to win at the Casino Royale table. He is a dangerous creditor hanging over the film’s main plot.", "Casino_Royale_(2006_film)"],
+      ["Alex Dimitrios", "Simon Abkarian", "Casino Royale", "H", "Alex Dimitrios is an arms dealer in Casino Royale, played by Simon Abkarian, and the husband of Solange, played by Caterina Murino. Bond follows his trail in the Bahamas after the Madagascar chase. The lead eventually points him toward Le Chiffre.", "Casino_Royale_(2006_film)"],
+      ["Dominic Greene", "Mathieu Amalric", "Quantum of Solace", "V", "Dominic Greene is the villain of Quantum of Solace (2008), played by Mathieu Amalric. A leading member of the Quantum organisation, he poses as an environmentalist businessman while plotting a Bolivian coup that would put General Medrano in power in exchange for land sitting on a valuable aquifer. Director Marc Forster did not want him to look grotesque but to symbolise hidden evil in society. Spectre later reveals Quantum to be part of SPECTRE. Bond leaves Greene in the desert with only a can of motor oil.", "Quantum_of_Solace"],
+      ["Elvis", "Anatole Taubman", "Quantum of Solace", "H", "Elvis is Greene’s second-in-command in Quantum of Solace, played by Anatole Taubman. The actor suggested the bowl cut himself. He and Mathieu Amalric improvised a backstory in which Elvis is Dominic’s cousin who once lived on the streets before joining Quantum.", "Quantum_of_Solace"],
+      ["General Medrano", "Joaquín Cosío", "Quantum of Solace", "V", "General Medrano is the exiled general whom Greene wants to install in power in Quantum of Solace, played by Joaquín Cosío. He murdered the entire family of Camille Montes when she was a young girl, which gives her a personal reason to hunt him. In return for backing his coup, Medrano would give Greene’s organisation the land above the aquifer.", "Quantum_of_Solace"],
+      ["Mr. White", "Jesper Christensen", "Casino Royale / Quantum of Solace", "V", "Mr. White is a senior member of the Quantum organisation, played by Jesper Christensen across Casino Royale, Quantum of Solace and Spectre. In Casino Royale he has Le Chiffre killed and takes back the money before Bond arrests him, and in Quantum of Solace he escapes custody. In Spectre he is dying of thallium poisoning and takes his own life with Bond’s pistol. He is also the father of Madeleine Swann, Bond’s love interest in Spectre and No Time to Die.", "Casino_Royale_(2006_film)"],
+      ["Raoul Silva", "Javier Bardem", "Skyfall", "V", "Raoul Silva, born Tiago Rodrigues, is a former MI6 agent turned cyberterrorist in Skyfall (2012), played by Javier Bardem. He holds a homicidal grudge against M and plans to discredit and kill her, starting with a massive cyberattack on MI6. His quarrel is with M rather than with Bond. Bond ends the fight by throwing a hunting knife into his back.", "Raoul_Silva"],
+      ["Patrice", "Ola Rapace", "Skyfall", "H", "Patrice is a mercenary working under Silva’s command in Skyfall, played by Ola Rapace. He is the hired gun who handles violent errands for the man behind the cyberattack on MI6. That makes him a natural fit for the henchperson side of this bracket.", "Skyfall"],
+      ["Séverine", "Bérénice Marlohe", "Skyfall", "H", "Séverine is Raoul Silva’s associate and mistress in Skyfall, played by Bérénice Marlohe. She is counted here as a henchwoman because she works inside Silva’s network. Bond’s encounter with her gives him a path toward the man behind the attack on MI6.", "Skyfall"],
+      ["Max Denbigh, “C”", "Andrew Scott", "Spectre", "H", "Max Denbigh, known as “C,” is the head of the new joint intelligence service in Spectre, played by Andrew Scott. He is also a SPECTRE agent working to merge nine national intelligence agencies into the Nine Eyes Committee, which would give the organisation global surveillance power. He falls to his death after a fight with M.", "Spectre_(2015_film)"],
+      ["Blofeld", "Christoph Waltz", "Spectre / No Time to Die", "V", "Christoph Waltz plays Ernst Stavro Blofeld in Spectre (2015) and No Time to Die (2021), first presented as Franz Oberhauser. He is the head of SPECTRE and the hidden hand behind a series of events in Bond’s life, driven by a long-running grudge against him. Spectre brought the organisation back to the screen and closed out the legal dispute over the Thunderball rights. In No Time to Die he is accidentally infected with a deadly bioweapon when Bond touches and strangles him.", "Ernst_Stavro_Blofeld"],
+      ["Mr. Hinx", "Dave Bautista", "Spectre", "H", "Mr. Hinx is SPECTRE’s top assassin in Spectre, played by the former wrestler Dave Bautista. He is an imposing figure in the tradition of the series’ physically intimidating henchpeople. His job in the film is to hunt Bond on the organisation’s behalf.", "Spectre_(2015_film)"],
+      ["Lyutsifer Safin", "Rami Malek", "No Time to Die", "V", "Lyutsifer Safin is the villain of No Time to Die (2021), played by Rami Malek, a bioterrorist and scientist on a revenge mission against SPECTRE. He plans to use Heracles, a DNA-targeting bioweapon stolen from MI6, to wipe out SPECTRE and then sell it worldwide. Producer Barbara Broccoli described him as a villain who really gets under Bond’s skin. Bond shoots him, though not before Safin infects Bond.", "No_Time_to_Die"],
+      ["Primo", "Dali Benssalah", "No Time to Die", "H", "Primo is a SPECTRE operative played by Dali Benssalah in No Time to Die, who attacks Bond at Vesper Lynd’s grave. After SPECTRE falls apart, its remaining survivors defect to Safin. Primo is killed at the end of the film as SPECTRE is destroyed.", "No_Time_to_Die"]
     ]}
   ];
   var ROUND_NAMES = ["Round of 16","Quarterfinals","Semifinals","Region Final"];
+  var ROUND_SHORT = ["Rd of 16","Quarters","Semis","Final"];
+  var activeRound = { c:0, m:0, b:0, k:0 };   // which round each era shows on narrow screens
   var STORE_KEY = "bondBracket.v1";
+  // Custom illustrations: map an entry id (c0–c15, m0–m15, b0–b15, k0–k15) to an image path,
+  // e.g. IMAGES.c0 = "images/dr-no.png". Entries without one show the gray placeholder.
+  // Image convention (alphanumeric, one file per entry, number = position in the branch, zero-padded):
+  //   images/thumb/c01.png  small circle      images/pose/c01.png  larger modal image (different pose)
+  // Branch letters: c = Connery/Lazenby, m = Moore, b = Dalton/Brosnan, k = Craig. Change IMG_EXT if you use .webp/.jpg.
+  // A file that doesn't exist yet simply leaves the gray circle showing. IMAGES.<id> = "path" overrides a thumbnail.
+  var IMG_EXT = ".png";
+  var IMAGES = {};
+  function imgPath(e, kind){
+    var n = parseInt(e.id.slice(1),10) + 1;
+    return "images/" + kind + "/" + e.id.charAt(0) + (n<10 ? "0"+n : n) + IMG_EXT;
+  }
 
   // index entries by id
   var ENTRY = {};
   REGIONS.forEach(function(r){
     r.entries = r.entries.map(function(e,i){
-      var o = { id:r.id+i, region:r.id, name:e[0], actor:e[1], film:e[2], role:e[3], mono:e[4] };
+      var o = { id:r.id+i, region:r.id, name:e[0], actor:e[1], film:e[2], role:e[3], bio:e[4], wp:e[5] };
       ENTRY[o.id] = o;
       return o;
     });
@@ -227,16 +315,6 @@ footer p{max-width:720px;margin:6px auto}
     try{ localStorage.setItem(STORE_KEY, JSON.stringify(picks)); }catch(e){}
   }
   function regionById(id){ return REGIONS.filter(function(r){return r.id===id;})[0]; }
-
-  function initials(e){
-    if(e.mono) return e.mono;
-    var words = e.name.replace(/[“”"]/g,"").split(/\s+/).filter(function(w){
-      return w && !/^(Mr\.|Dr\.|&|Professor|General|Prince|Baron|Colonel)$/.test(w);
-    });
-    if(!words.length) return "?";
-    var a = words[0].charAt(0), b = words.length>1 ? words[words.length-1].charAt(0) : "";
-    return (a+b).toUpperCase();
-  }
 
   // ---- bracket logic ----
   function gameKey(rid, round, g){ return rid+"-"+round+"-"+g; }
@@ -280,6 +358,16 @@ footer p{max-width:720px;margin:6px auto}
     picks[key] = id;
     normalize();
     save();
+    // on narrow screens, move on to the next round once the current one is fully decided
+    var m = /^([a-z])-(\d)-\d+$/.exec(key);
+    if(m){
+      var rid = m[1], round = +m[2];
+      if(round === activeRound[rid] && round < 3){
+        var all = true;
+        for(var g=0; g<(8>>round); g++){ if(!picks[gameKey(rid,round,g)]) all = false; }
+        if(all) activeRound[rid] = round + 1;
+      }
+    }
     render();
   }
 
@@ -290,30 +378,47 @@ footer p{max-width:720px;margin:6px auto}
     if(text!=null) n.textContent = text;
     return n;
   }
+  function paint(node, e){
+    node.style.backgroundImage = "url(" + (IMAGES[e.id] || imgPath(e,"thumb")) + ")";
+  }
   function slot(key, id, parts){
-    var b = el("button","slot");
-    b.type = "button";
+    var s = el("div","slot");
     var bothReady = parts[0] && parts[1];
     if(!id){
-      b.disabled = true;
-      b.appendChild(el("span","mono tbd"," "));
-      var t = el("div","txt"); t.appendChild(el("div","tbd-text","To be decided")); b.appendChild(t);
-      return b;
+      var ph = el("span","thumb ph"); ph.appendChild(el("span","mono tbd"));
+      var box = el("div","pickbox"); box.appendChild(el("div","tbd-text","To be decided"));
+      s.appendChild(ph); s.appendChild(box);
+      return s;
     }
     var e = ENTRY[id];
     var winner = winnerOf(key);
-    if(winner===id) b.classList.add("win");
-    else if(winner) b.classList.add("lose");
-    b.setAttribute("aria-pressed", winner===id ? "true":"false");
-    b.title = e.name+" ("+e.actor+", "+e.film+")";
-    b.appendChild(el("span","mono "+e.role, initials(e)));
+    if(winner===id) s.classList.add("win");
+    else if(winner) s.classList.add("lose");
+    if(bothReady) s.classList.add("can");
+
+    // portrait: opens the profile
+    var th = el("button","thumb");
+    th.type = "button";
+    th.setAttribute("aria-label","Profile: "+e.name+" ("+e.actor+")");
+    th.setAttribute("aria-haspopup","dialog");
+    var ring = el("span","mono "+e.role); paint(ring, e);
+    th.appendChild(ring);
+    th.addEventListener("click", function(){ openModal(e, th); });
+
+    // name: picks the winner
+    var pk = el("button","pick");
+    pk.type = "button";
+    pk.setAttribute("aria-pressed", winner===id ? "true":"false");
+    pk.title = e.name+" ("+e.actor+", "+e.film+")";
     var txt = el("div","txt");
     txt.appendChild(el("div","nm",e.name));
     txt.appendChild(el("div","sub",e.actor));
-    b.appendChild(txt);
-    if(!bothReady) b.disabled = true;
-    else b.addEventListener("click", function(){ choose(key,id); });
-    return b;
+    pk.appendChild(txt);
+    if(!bothReady) pk.disabled = true;
+    else pk.addEventListener("click", function(){ choose(key,id); });
+
+    s.appendChild(th); s.appendChild(pk);
+    return s;
   }
   function game(key, parts){
     var g = el("div","game");
@@ -332,10 +437,26 @@ footer p{max-width:720px;margin:6px auto}
       var meta = el("div","meta"); meta.appendChild(document.createTextNode(r.era)); meta.appendChild(document.createElement("br")); meta.appendChild(document.createTextNode(r.films));
       head.appendChild(meta);
       sec.appendChild(head);
+      var tabs = el("div","round-tabs");
+      tabs.setAttribute("role","group");
+      tabs.setAttribute("aria-label",r.name+" rounds");
+      for(var t=0; t<4; t++){
+        (function(t){
+          var n = 8>>t, done = 0;
+          for(var g=0; g<n; g++){ if(picks[gameKey(r.id,t,g)]) done++; }
+          var tb = el("button","rtab"+(t===activeRound[r.id] ? " on":""), ROUND_SHORT[t]);
+          tb.type = "button";
+          tb.setAttribute("aria-pressed", t===activeRound[r.id] ? "true":"false");
+          tb.appendChild(el("small","",done+"/"+n));
+          tb.addEventListener("click", function(){ activeRound[r.id] = t; render(); });
+          tabs.appendChild(tb);
+        })(t);
+      }
+      sec.appendChild(tabs);
       var scroll = el("div","bracket-scroll");
       var br = el("div","bracket");
       for(var round=0; round<4; round++){
-        var col = el("div","round");
+        var col = el("div","round"+(round===activeRound[r.id] ? " active":""));
         col.appendChild(el("div","round-title display",ROUND_NAMES[round]));
         var games = el("div","games");
         for(var g=0; g<(8>>round); g++){
@@ -377,12 +498,14 @@ footer p{max-width:720px;margin:6px auto}
     document.getElementById("progress").textContent = done+" of "+total+" games decided";
   }
   function render(){
+    var y = window.pageYOffset;
     renderRegions(); renderFinal(); renderProgress();
+    window.scrollTo(0, y);
   }
 
   // ---- controls ----
   document.getElementById("resetBtn").addEventListener("click", function(){
-    picks = {}; save(); render();
+    picks = {}; activeRound = { c:0, m:0, b:0, k:0 }; save(); render();
   });
   document.getElementById("randomBtn").addEventListener("click", function(){
     allKeys().forEach(function(k){
@@ -392,8 +515,80 @@ footer p{max-width:720px;margin:6px auto}
     normalize(); save(); render();
   });
 
+  // ---- profile modal ----
+  var modalBack = document.getElementById("modalBack");
+  var modalEl = document.getElementById("modal");
+  var mClose = document.getElementById("mClose");
+  var mCopy = document.getElementById("mCopy");
+  var mSrc = document.getElementById("mSrc");
+  var lastFocus = null, copyTimer = null, current = null;
+
+  function openModal(e, trigger){
+    current = e;
+    lastFocus = trigger || document.activeElement;
+    var portrait = document.getElementById("mPortrait");
+    portrait.className = "portrait " + e.role;
+    portrait.style.backgroundImage = "url(" + imgPath(e,"pose") + ")";
+    var role = document.getElementById("mRole");
+    role.className = "m-role display " + e.role;
+    role.textContent = e.role==="V" ? "Villain" : "Henchperson";
+    document.getElementById("mName").textContent = e.name;
+    document.getElementById("mMeta").textContent = e.actor + " · " + e.film;
+    document.getElementById("mBio").textContent = e.bio;
+    mSrc.href = "https://en.wikipedia.org/wiki/" + e.wp;
+    mCopy.textContent = "Copy";
+    modalBack.classList.add("open");
+    document.body.classList.add("modal-open");
+    modalEl.scrollTop = 0;
+    mClose.focus();
+  }
+  function closeModal(){
+    if(!modalBack.classList.contains("open")) return;
+    modalBack.classList.remove("open");
+    document.body.classList.remove("modal-open");
+    clearTimeout(copyTimer);
+    current = null;
+    if(lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  function copyText(text){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise(function(resolve, reject){
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try{ ok = document.execCommand("copy"); }catch(err){}
+      document.body.removeChild(ta);
+      ok ? resolve() : reject();
+    });
+  }
+  mCopy.addEventListener("click", function(){
+    if(!current) return;
+    var text = current.name + " (" + current.actor + ", " + current.film + ")\n\n" + current.bio +
+               "\n\nSource: Wikipedia, https://en.wikipedia.org/wiki/" + current.wp;
+    function flash(msg){
+      mCopy.textContent = msg;
+      clearTimeout(copyTimer);
+      copyTimer = setTimeout(function(){ mCopy.textContent = "Copy"; }, 1600);
+    }
+    copyText(text).then(function(){ flash("Copied"); }, function(){ flash("Copy failed"); });
+  });
+  mClose.addEventListener("click", closeModal);
+  modalBack.addEventListener("click", function(ev){ if(ev.target === modalBack) closeModal(); });
+  document.addEventListener("keydown", function(ev){
+    if(!modalBack.classList.contains("open")) return;
+    if(ev.key === "Escape"){ ev.preventDefault(); closeModal(); return; }
+    if(ev.key === "Tab"){
+      var f = [mClose, mSrc, mCopy], i = f.indexOf(document.activeElement);
+      if(ev.shiftKey){ if(i <= 0){ ev.preventDefault(); f[f.length-1].focus(); } }
+      else if(i === f.length-1 || i === -1){ ev.preventDefault(); f[0].focus(); }
+    }
+  });
+
   // test hook (harmless in production)
-  window.__bracket = { REGIONS:REGIONS, ENTRY:ENTRY, allKeys:allKeys, picks:function(){return picks;}, choose:choose, normalize:normalize, finalParticipants:finalParticipants, regionParticipants:regionParticipants, initials:initials };
+  window.__bracket = { REGIONS:REGIONS, ENTRY:ENTRY, allKeys:allKeys, picks:function(){return picks;}, choose:choose, normalize:normalize, finalParticipants:finalParticipants, regionParticipants:regionParticipants, openModal:openModal, closeModal:closeModal };
 
   normalize();
   render();
